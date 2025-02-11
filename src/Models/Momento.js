@@ -1,4 +1,6 @@
 
+import MomentoDB from "src/DataBase/MomentoDB";
+
 // modelo.js
 class Momento {
   constructor(nombre, edad) {
@@ -7,6 +9,9 @@ class Momento {
   }
 
   saludar() {
+    const asdas = MomentoDB.all()
+    console.log('asdas');
+    console.log(asdas);
     return `Hola, soy ${this.nombre} y tengo ${this.edad} años.`;
   }
 }
