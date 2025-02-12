@@ -1,5 +1,5 @@
 <template>
-  <div style="border-radius: 24px;">
+  <div style="border-radius: 24px;" class="bg-white">
     <div class="col-12 row">
       <div class="col-12">
         <span style="font-size: 24px" class="text-grey-9">{{

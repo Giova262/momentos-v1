@@ -1,12 +1,7 @@
 <template>
-  <div class="col-12 row q-pa-md">
+  <div class="col-12 row q-pa-md q-gutter-y-sm">
     <div class="col-12">
-      <q-input
-        v-model="momento.nombre"
-        label="Nombre"
-        filled
-        :rules="[(val) => !!val || 'El nombre es obligatorio']"
-      />
+      <q-input v-model="momento.nombre" label="Nombre" filled />
     </div>
 
     <div class="col-12">
@@ -15,7 +10,6 @@
         label="Edad"
         type="number"
         filled
-        :rules="[(val) => val > 0 || 'La edad debe ser mayor que 0']"
       />
     </div>
 
@@ -32,7 +26,7 @@
 
 <script setup>
 import Momento from "src/Models/Momento";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted } from "vue";
 
 const emit = defineEmits(["add"]);
 
