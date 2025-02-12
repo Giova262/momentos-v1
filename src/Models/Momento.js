@@ -35,9 +35,9 @@ class Momento {
 
   payload() {
     return {
-      id_evento: this.id || null,
-      nombre: this.nombre || null,
-      edad: this.edad || null,
+      id: this.id ? this.id : -1,
+      nombre: this.nombre ? this.nombre : '',
+      edad: this.edad ? this.edad : '',
     }
   }
 

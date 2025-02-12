@@ -1,6 +1,6 @@
 <template>
   <q-page class="row">
-    <InputsPage class="col-12"/>
+    <InputsPage class="col-12" :isEditing="false" />
   </q-page>
 </template>
 
