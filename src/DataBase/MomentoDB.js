@@ -20,24 +20,55 @@ async function migrar(list) {
 
 async function add(item) {
   return await Database.momentos.add({
-    id_permissions: item.id,
-    submenu: item.submenu,
-    codigo: item.codigo,
+    id_evento: item.id,
+    nombre: item.nombre,
+    edad: item.edad,
   });
+}
+
+async function update(id, item) {
+  Database.momentos.where("id_evento").equals(id).first()
+    .then((usuario) => {
+      if (usuario) {
+        return Database.momentos.update(usuario.id, { nombre: item.nombre, edad: item.edad });
+      } else {
+        console.log("No se encontró el item.");
+      }
+    })
+    .then((updated) => {
+      if (updated) console.log("Item actualizado.");
+    })
+    .catch((err) => console.error("Error al actualizar:", err));
+}
+
+async function destroy(id) {
+  Database.momentos.where("id_evento").equals(id).first()
+    .then((item) => {
+      if (item) {
+        return Database.momentos.delete(item.id);
+      } else {
+        console.log("No se encontró el Item con ese código.");
+      }
+    })
+    .then(() => console.log("Item eliminado"))
+    .catch((err) => console.error("Error al eliminar:", err));
+}
+
+async function show(id) {
+  return await Database.momentos.where("id_evento").equals(id).first()
+  // return await Database.momentos.where({ id_evento: id }).toArray();
 }
 
 async function all() {
   return await Database.momentos.toArray();
 }
 
-async function getSubmenu(data) {
-  return await Database.momentos.where({ submenu: data }).toArray();
-}
-
 export default {
   clear,
   migrar,
+  show,
   all,
   add,
-  getSubmenu,
+  update,
+  destroy
 };

@@ -1,17 +1,34 @@
 
 import MomentoDB from "src/DataBase/MomentoDB";
 
-// modelo.js
 class Momento {
-  constructor(nombre, edad) {
+  constructor(id, nombre, edad) {
+    this.id = id;
     this.nombre = nombre;
     this.edad = edad;
   }
 
+  reset() {
+    this.id = null;
+    this.nombre = null;
+    this.edad = null;
+  }
+
+  fill(data) {
+    this.id = data.id;
+    this.nombre = data.nombre;
+    this.edad = data.edad;
+  }
+
+  save() {
+    MomentoDB.add({
+      id_evento: this.id,
+      nombre: this.nombre,
+      edad: this.edad,
+    })
+  }
+
   saludar() {
-    const asdas = MomentoDB.all()
-    console.log('asdas');
-    console.log(asdas);
     return `Hola, soy ${this.nombre} y tengo ${this.edad} años.`;
   }
 }
