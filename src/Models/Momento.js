@@ -21,11 +21,23 @@ class Momento {
   }
 
   save() {
-    MomentoDB.add({
+    MomentoDB.add(this.payload())
+  }
+
+  update() {
+    MomentoDB.update(this.id, this.payload())
+  }
+
+  destroy() {
+    MomentoDB.destroy(this.id)
+  }
+
+  payload() {
+    return {
       id_evento: this.id,
       nombre: this.nombre,
       edad: this.edad,
-    })
+    }
   }
 
   saludar() {
