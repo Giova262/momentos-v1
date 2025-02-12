@@ -34,22 +34,22 @@
 import Momento from "src/Models/Momento";
 import { onMounted, reactive, ref } from "vue";
 
+const emit = defineEmits(["add"]);
+
 const props = defineProps({
   isEditing: {
     type: Boolean,
     required: true,
     default: false,
   },
-  currentItem: {
-    type: Object,
-    required: false,
+  momento: {
+    type: Momento,
+    required: true,
   },
 });
 
-const momento = reactive(new Momento());
-
 function onGrabarClick() {
-  momento.save();
+  emit("add");
 }
 
 onMounted(() => {

@@ -42,6 +42,10 @@ async function update(id, item) {
 }
 
 async function destroy(id) {
+  return await Database.momentos.delete(id);
+}
+
+async function destroy_by_evento_id(id) {
   Database.momentos.where("id_evento").equals(id).first()
     .then((item) => {
       if (item) {
@@ -59,7 +63,7 @@ async function show(id) {
   // return await Database.momentos.where({ id_evento: id }).toArray();
 }
 
-async function all() {
+async function getAll() {
   return await Database.momentos.toArray();
 }
 
@@ -67,8 +71,9 @@ export default {
   clear,
   migrar,
   show,
-  all,
+  getAll,
   add,
   update,
-  destroy
+  destroy,
+  destroy_by_evento_id
 };

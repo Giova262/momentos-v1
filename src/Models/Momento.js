@@ -3,20 +3,23 @@ import MomentoDB from "src/DataBase/MomentoDB";
 import { checkObjectKey } from "src/Servicios/ValidacionesService";
 
 class Momento {
-  constructor(id, nombre, edad) {
-    this.id = id;
-    this.nombre = nombre;
-    this.edad = edad;
+  constructor() {
+    this.id_dexie = null;
+    this.id_evento = null;
+    this.nombre = null;
+    this.edad = null;
   }
 
   reset() {
-    this.id = null;
+    this.id_dexie = null;
+    this.id_evento = null;
     this.nombre = null;
     this.edad = null;
   }
 
   fill(data) {
-    this.id = data.id;
+    this.id_dexie = data.id;
+    this.id_evento = data.id_evento;
     this.nombre = data.nombre;
     this.edad = data.edad;
   }
@@ -29,13 +32,13 @@ class Momento {
     MomentoDB.update(this.id, this.payload())
   }
 
-  destroy() {
-    MomentoDB.destroy(this.id)
+  async destroy() {
+    await MomentoDB.destroy(this.id_dexie)
   }
 
   payload() {
     return {
-      id: this.id ? this.id : -1,
+      id_evento: this.id_evento ? this.id_evento : -1,
       nombre: this.nombre ? this.nombre : '',
       edad: this.edad ? this.edad : '',
     }
