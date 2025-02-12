@@ -2,7 +2,7 @@
   <div class="col-12 row q-pa-md">
     <div class="col-12">
       <q-input
-        v-model="modelo.nombre"
+        v-model="momento.nombre"
         label="Nombre"
         filled
         :rules="[(val) => !!val || 'El nombre es obligatorio']"
@@ -11,7 +11,7 @@
 
     <div class="col-12">
       <q-input
-        v-model.number="modelo.edad"
+        v-model.number="momento.edad"
         label="Edad"
         type="number"
         filled
@@ -20,7 +20,12 @@
     </div>
 
     <div class="col-12 full-height">
-      <q-btn label="Enviar" type="submit" color="primary" class="q-mt-md" />
+      <q-btn
+        label="GRABAR"
+        @click="onGrabarClick"
+        color="primary"
+        class="q-mt-md"
+      />
     </div>
   </div>
 </template>
@@ -29,33 +34,13 @@
 import Momento from "src/Models/Momento";
 import { onMounted, reactive, ref } from "vue";
 
-const props = defineProps({
-  title: {
-    type: String,
-    required: false,
-  },
+const momento = reactive(new Momento());
 
-  caption: {
-    type: String,
-    default: "",
-  },
-
-  link: {
-    type: String,
-    default: "#",
-  },
-
-  icon: {
-    type: String,
-    default: "",
-  },
-});
-
-const modelo = reactive(new Momento());
+function onGrabarClick() {
+  console.log(momento.saludar());
+}
 
 onMounted(() => {
-  console.log( "¡Componente montado!");
-  console.log(modelo.saludar());
+  console.log("¡Componente montado!");
 });
-
 </script>
