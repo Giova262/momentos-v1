@@ -1,5 +1,6 @@
 
 import MomentoDB from "src/DataBase/MomentoDB";
+import { checkObjectKey } from "src/Servicios/ValidacionesService";
 
 class Momento {
   constructor(id, nombre, edad) {
@@ -34,9 +35,9 @@ class Momento {
 
   payload() {
     return {
-      id_evento: this.id,
-      nombre: this.nombre,
-      edad: this.edad,
+      id_evento: this.id || null,
+      nombre: this.nombre || null,
+      edad: this.edad || null,
     }
   }
 

@@ -37,7 +37,7 @@ import { onMounted, reactive, ref } from "vue";
 const momento = reactive(new Momento());
 
 function onGrabarClick() {
-  console.log(momento.saludar());
+  momento.save();
 }
 
 onMounted(() => {
