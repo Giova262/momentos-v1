@@ -151,19 +151,44 @@ const loading = ref(false);
 const page = ref(1);
 
 const loadMore = async () => {
-  loading.value = true;
-  const newItems = await fetchItems(page.value);
-  items.value.push(...newItems);
-  page.value++;
-  loading.value = false;
+
+
+  console.log('esta cargando mas');
+
+  const lista_completa = await MomentoDB.getAll();
+  for (let i = 0; i < lista_completa.length; i++) {
+    const nuevo_momento = new Momento();
+    nuevo_momento.fill(lista_completa[i]);
+    momentos.value.push(nuevo_momento);
+  }
+
+  console.log(momentos.value.length);
+
+
+  // loading.value = true;
+  // const newItems = await fetchItems(page.value);
+  // items.value.push(...newItems);
+  // page.value++;
+  // loading.value = false;
 };
 
 const loadMoreTop = async () => {
-  loading.value = true;
-  const newItems = await fetchItems(page.value - 1);
-  items.value.unshift(...newItems);
-  page.value--;
-  loading.value = false;
+
+  console.log('esta cargando mas');
+
+  const lista_completa = await MomentoDB.getAll();
+  for (let i = 0; i < lista_completa.length; i++) {
+    const nuevo_momento = new Momento();
+    nuevo_momento.fill(lista_completa[i]);
+    momentos.value.unshift(nuevo_momento);
+  }
+
+  console.log(momentos.value.length);
+  // loading.value = true;
+  // const newItems = await fetchItems(page.value - 1);
+  // items.value.unshift(...newItems);
+  // page.value--;
+  // loading.value = false;
 };
 
 const fetchItems = async (page) => {

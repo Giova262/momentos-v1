@@ -10,16 +10,14 @@
     </div> -->
 
     <div class="col-12 bg-grey-2 q-pa-sm">
-      <div v-for="(a, i) in items" class="col-12 row">
-        <ShowPage
-          v-for="momento in momentos"
-          :key="momento.id"
-          :momento="momento"
-          @edit="onEditarClick(momento)"
-          @delete="onEliminarClick(momento)"
-          class="col-12 q-pa-md q-mb-sm"
-        />
-      </div>
+      <ShowPage
+        v-for="momento in momentos"
+        :key="momento.id"
+        :momento="momento"
+        @edit="onEditarClick(momento)"
+        @delete="onEliminarClick(momento)"
+        class="col-12 q-pa-md q-mb-sm"
+      />
     </div>
   </div>
 </template>
@@ -29,7 +27,7 @@ import Momento from "src/Models/Momento";
 import ShowPage from "src/components/Momentos/Show.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
-const emit = defineEmits(["edit", "delete"]);
+const emit = defineEmits(["edit", "delete", "load-more", "load-more-top"]);
 
 const props = defineProps({
   momentos: {
@@ -39,7 +37,44 @@ const props = defineProps({
 });
 
 const loading = ref(false);
-const items = ref([]);
+const items = ref([
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+  {
+    id_dexie: "data",
+    id_evento: "data",
+    nombre: "data",
+    edad: "data",
+  },
+]);
 const scrollContainer = ref(null);
 const page = ref(0);
 const pageSize = 20;
@@ -53,22 +88,14 @@ function onEliminarClick(e) {
 
 const loadItems = async (direction) => {
   loading.value = true;
-  // Simulate an API call
-  const newItems = await new Promise((resolve) => {
-    setTimeout(() => {
-      const newItems = Array.from(
-        { length: pageSize },
-        (_, i) => `Item ${page.value * pageSize + i + 1}`
-      );
-      resolve(newItems);
-    }, 1000);
-  });
 
   if (direction === "bottom") {
-    items.value.push(...newItems);
+    emit("load-more");
   } else {
-    items.value.unshift(...newItems);
-    scrollContainer.value.scrollTop += newItems.length * 20; // Adjust scroll position
+    emit("load-more-top");
+    setTimeout(() => {
+      scrollContainer.value.scrollTop += props.momentos.length * 20; // Adjust scroll position
+    }, 500);
   }
 
   loading.value = false;
