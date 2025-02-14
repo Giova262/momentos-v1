@@ -5,21 +5,11 @@
       @load-more-top="loadMoreTop"
       @edit="(momento) => onEditarClick(momento)"
       @delete="(momento) => onEliminarClick(momento)"
-      :items="items"
-      :momentos="momentos"
+      :items="momentos"
       :loading="loading"
       class="bg-white"
     />
-    <!-- <div class="bg-grey-5 q-pa-sm scroll" style="height: 70vh;">
-      <ShowPage
-        v-for="momento in momentos"
-        :key="momento.id"
-        class="q-ma-md q-pa-md bg-white"
-        :momento="momento"
-        @edit="onEditarClick(momento)"
-        @delete="onEliminarClick(momento)"
-      />
-    </div> -->
+
     <div class="bg-grey-1">
       <InputsPage
         class="col-12"
@@ -146,14 +136,10 @@ onDeactivated(() => {
 
 //-----
 
-const items = ref([]);
 const loading = ref(false);
-const page = ref(1);
 
 const loadMore = async () => {
-
-
-  console.log('esta cargando mas');
+  loading.value = true;
 
   const lista_completa = await MomentoDB.getAll();
   for (let i = 0; i < lista_completa.length; i++) {
@@ -162,19 +148,11 @@ const loadMore = async () => {
     momentos.value.push(nuevo_momento);
   }
 
-  console.log(momentos.value.length);
-
-
-  // loading.value = true;
-  // const newItems = await fetchItems(page.value);
-  // items.value.push(...newItems);
-  // page.value++;
-  // loading.value = false;
+  loading.value = false;
 };
 
 const loadMoreTop = async () => {
-
-  console.log('esta cargando mas');
+  loading.value = true;
 
   const lista_completa = await MomentoDB.getAll();
   for (let i = 0; i < lista_completa.length; i++) {
@@ -182,23 +160,6 @@ const loadMoreTop = async () => {
     nuevo_momento.fill(lista_completa[i]);
     momentos.value.unshift(nuevo_momento);
   }
-
-  console.log(momentos.value.length);
-  // loading.value = true;
-  // const newItems = await fetchItems(page.value - 1);
-  // items.value.unshift(...newItems);
-  // page.value--;
-  // loading.value = false;
-};
-
-const fetchItems = async (page) => {
-  // Simulate an API call
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(
-        Array.from({ length: 10 }, (_, i) => `Item ${(page - 1) * 10 + i + 1}`)
-      );
-    }, 1000);
-  });
+  loading.value = false;
 };
 </script>
