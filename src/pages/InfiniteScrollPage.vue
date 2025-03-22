@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import InfiniteScroll from "src/components/InfiniteScroll.vue";
+import InfiniteScroll from "src/components/InfiniteScroll/InfiniteScroll.vue";
 
 import {
   ref,
@@ -38,8 +38,7 @@ import {
   onActivated,
   onDeactivated,
 } from "vue";
-import InputsPage from "src/components/Momentos/Inputs.vue";
-import ShowPage from "src/components/Momentos/Show.vue";
+import InputsPage from "src/components/InfiniteScroll/Inputs.vue";
 import MomentoDB from "src/DataBase/MomentoDB";
 import Momento from "src/Models/Momento";
 

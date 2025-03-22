@@ -20,7 +20,7 @@
 
 <script setup>
 import { Loading } from "quasar";
-import ShowPage from "src/components/Momentos/Show.vue";
+import ShowPage from "src/components/InfiniteScroll/Show.vue";
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const emit = defineEmits(["edit", "delete", "load-more", "load-more-top"]);
@@ -38,7 +38,8 @@ const page = ref(0);
 
 function onEditarClick(e) {
   emit("edit", e);
-} 122
+}
+122;
 function onEliminarClick(e) {
   emit("delete", e);
 }

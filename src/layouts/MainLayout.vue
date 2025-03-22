@@ -60,9 +60,34 @@ const lista_de_menues = ref([
     route: "/infinite-scroll",
   },
   {
-    name: "Contact",
-    icon: "mail",
-    route: "/contact",
+    name: "Momentos",
+    icon: "event",
+    route: "/momentos",
+  },
+  {
+    name: "Cuentas",
+    icon: "account_balance",
+    route: "/cuentas",
+  },
+  {
+    name: "Categorías",
+    icon: "category",
+    route: "/categorias",
+  },
+  {
+    name: "Transacciones",
+    icon: "attach_money",
+    route: "/transacciones",
+  },
+  {
+    name: "Reportes",
+    icon: "insert_chart",
+    route: "/reportes",
+  },
+  {
+    name: "Configuración",
+    icon: "settings",
+    route: "/configuracion",
   },
 ]);
 
