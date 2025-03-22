@@ -19,7 +19,22 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header> JOSUE GIOVANNI VALDIVIA DEV </q-item-label>
+
+        <q-item
+          v-for="menu in lista_de_menues"
+          :key="menu.name"
+          clickable
+          @click="() => $router.push(menu.route)"
+        >
+          <q-item-section avatar>
+            <q-icon :name="menu.icon" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label> {{ menu.name }} </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -33,6 +48,23 @@
 import { ref } from "vue";
 
 const leftDrawerOpen = ref(false);
+const lista_de_menues = ref([
+  {
+    name: "Home",
+    icon: "home",
+    route: "/",
+  },
+  {
+    name: "Scroll Infinite",
+    icon: "view_list",
+    route: "/infinite-scroll",
+  },
+  {
+    name: "Contact",
+    icon: "mail",
+    route: "/contact",
+  },
+]);
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
