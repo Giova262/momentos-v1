@@ -38,7 +38,7 @@ const page = ref(0);
 
 function onEditarClick(e) {
   emit("edit", e);
-}
+} 122
 function onEliminarClick(e) {
   emit("delete", e);
 }
