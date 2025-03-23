@@ -67,7 +67,7 @@ const lista_de_menues = ref([
   {
     name: "Cuentas",
     icon: "account_balance",
-    route: "/cuentas",
+    route: "/account_balance",
   },
   {
     name: "Categorías",
