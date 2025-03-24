@@ -1,20 +1,95 @@
 <template>
-  <q-page class="bg-grey-2">
-    <div class="q-pa-md text-center">
-      <h1 class="text-h4">ACCIONES3</h1>
-      <p class="text-subtitle1">
-        Esta aplicación te permite gestionar tus momentos importantes. Aquí
-        probamos nuevas funcionalidades antes de pasarlas a producción.
-      </p>
-      <p class="text-caption">Creado con ❤️ por Giova</p>
-      <div class="gear-container q-mt-md">
-        <div class="gear"></div>
-      </div>
-    </div>
+  <q-page class="bg-grey-2 flex flex-center">
+    <q-card class="q-pa-lg shadow-2">
+      <q-card-section>
+        <div class="text-h6 text-center">Calculadora de Finanzas</div>
+        <div class="text-subtitle1 text-center text-primary q-mb-md">
+          Bienvenido a tu calculadora financiera personalizada
+        </div>
+        <div class="text-h6 text-center q-mb-md text-grey-7 rounded-borders">
+          Cálculos realizados para el mes de
+          {{
+            new Date().toLocaleString("es-ES", {
+              month: "long",
+              year: "numeric",
+            })
+          }}
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        <q-input
+          v-model="sueldo"
+          label="Ingrese su sueldo actual"
+          type="number"
+          outlined
+          class=""
+          @keydown.enter.prevent="calcularGastos"
+        />
+      </q-card-section>
+
+      <q-card-actions class="justify-center q-mb-sm">
+        <q-btn
+          label="Calcular Gastos"
+          color="primary"
+          unelevated
+          class="q-px-lg q-py-sm text-bold rounded-borders shadow-2"
+          @click="calcularGastos"
+        />
+      </q-card-actions>
+
+      <q-card-section
+        v-if="resultado"
+        class="bg-blue-1 q-pa-md rounded-borders"
+      >
+        <q-list dense>
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                ><strong>Sueldo:</strong> $
+                {{ formatearNumero(sueldo) }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                ><strong>Total Gastos Fijos:</strong> $
+                {{ formatearNumero(totalGastosFijos) }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                ><strong>Total Deudas:</strong> $
+                {{ formatearNumero(totalDeudas) }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-separator class="q-my-md" color="grey-5" />
+            </q-item-section>
+          </q-item>
+
+          <q-item>
+            <q-item-section>
+              <q-item-label
+                ><strong>Saldo Restante:</strong> $
+                {{ formatearNumero(saldoRestante) }}</q-item-label
+              >
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
   </q-page>
 </template>
 
 <script setup>
+import { formatearNumero } from "src/Servicios/UtilsService";
 import {
   onMounted,
   onBeforeMount,
@@ -29,6 +104,7 @@ import {
 } from "vue";
 
 const emit = defineEmits(["incrementar"]);
+const sueldo = ref(2000000);
 
 const planDeCuentas = ref({
   ingresos: {
@@ -458,7 +534,7 @@ const planDeCuentas = ref({
         },
       ],
       divisas: [
-      {
+        {
           nombre: "Dolar MEP",
           simbolo: "USD",
           precio_actual: 42000,
@@ -487,7 +563,7 @@ const planDeCuentas = ref({
             },
           ],
         },
-      ]
+      ],
     },
   },
 
@@ -496,19 +572,16 @@ const planDeCuentas = ref({
       id: 1,
       nombre: "Alquiler",
       categoria: "Vivienda",
-      monto_estimado: 200,
-      monto_real: 200,
+      monto_real: 150000,
       moneda: "ARS",
       frecuencia_pago: "mensual",
-      fecha_inicio: "2021-09-01",
-      fecha_fin: "2024-09-01",
       estado: "activo",
       historial: [
         {
           id: 1,
-          fecha_pago: "2021-09-05",
-          descripcion: "Alquiler de septiembre",
-          monto: 200,
+          fecha_pago: "2025-03-01",
+          descripcion: "Alquiler de Marzo 2025",
+          monto: 150000,
           estado_pago: "pagado",
         },
       ],
@@ -517,17 +590,16 @@ const planDeCuentas = ref({
       id: 2,
       nombre: "Comida",
       categoria: "Alimentación",
-      monto_estimado: 200,
-      monto_real: 50,
+      monto_real: 120000,
       moneda: "ARS",
       frecuencia_pago: "mensual",
       estado: "activo",
       historial: [
         {
           id: 1,
-          fecha_pago: "2021-09-05",
+          fecha_pago: "2025-03-05",
           descripcion: "Supermercado",
-          monto: 50,
+          monto: 120000,
           estado_pago: "pagado",
         },
       ],
@@ -536,17 +608,16 @@ const planDeCuentas = ref({
       id: 3,
       nombre: "Seguro del auto",
       categoria: "Transporte",
-      monto_estimado: 150,
-      monto_real: 150,
+      monto_real: 65000,
       moneda: "ARS",
       frecuencia_pago: "mensual",
       estado: "activo",
       historial: [
         {
           id: 1,
-          fecha_pago: "2021-09-05",
-          descripcion: "Seguro de septiembre",
-          monto: 150,
+          fecha_pago: "2023-03-05",
+          descripcion: "Seguro de Marzo 2025",
+          monto: 65000,
           estado_pago: "pagado",
         },
       ],
@@ -564,7 +635,7 @@ const planDeCuentas = ref({
       cuota_mensual: 96362.43,
       interes_total: 0,
       tasa_interes_anual: 0,
-      proximo_vencimiento: "2025-04-01",
+      proximo_vencimiento: "2025/04/01",
       estado: "activa",
       pagos_realizados: [
         { fecha: "2024-12-01", monto: 96362.43, estado: "pagado" },
@@ -584,7 +655,7 @@ const planDeCuentas = ref({
       cuota_mensual: 16241.28,
       interes_total: 0,
       tasa_interes_anual: 0,
-      proximo_vencimiento: "2025-04-01",
+      proximo_vencimiento: "2025/04/01",
       estado: "activa",
       pagos_realizados: [
         { fecha: "2025-03-01", monto: 16241.28, estado: "pagado" },
@@ -601,7 +672,7 @@ const planDeCuentas = ref({
       cuota_mensual: 42859.06,
       interes_total: 0,
       tasa_interes_anual: 0,
-      proximo_vencimiento: "2025-04-01",
+      proximo_vencimiento: "2025/04/01",
       estado: "activa",
       pagos_realizados: [
         { fecha: "2025-03-01", monto: 42859.06, estado: "pagado" },
@@ -618,9 +689,44 @@ const planDeCuentas = ref({
   },
 });
 
-defineProps({
-  titulo: String,
-});
+const resultado = ref(false);
+const totalGastosFijos = ref(0);
+const totalDeudas = ref(0);
+const saldoRestante = ref(0);
+
+const calcularGastos = () => {
+  totalGastosFijos.value = planDeCuentas.value.gastos_fijos.reduce(
+    (total, gasto) => total + gasto.monto_real,
+    0
+  );
+
+  const mesActual = new Date().getMonth() + 1;
+  const anioActual = new Date().getFullYear();
+
+  console.log("mesActual");
+  console.log(mesActual);
+  console.log("anioActual");
+  console.log(anioActual);
+
+  totalDeudas.value = planDeCuentas.value.deudas.reduce((total, deuda) => {
+    console.log("deuda");
+    console.log(deuda.proximo_vencimiento);
+    const mesVencimiento = new Date(deuda.proximo_vencimiento).getMonth() + 1;
+    const anioVencimiento = new Date(deuda.proximo_vencimiento).getFullYear();
+    console.log("mesVencimiento");
+    console.log(mesVencimiento);
+    console.log("anioVencimiento");
+    console.log(anioVencimiento);
+    if (mesVencimiento === mesActual && anioVencimiento === anioActual) {
+      return total + deuda.cuota_mensual;
+    }
+    return total;
+  }, 0);
+
+  saldoRestante.value =
+    sueldo.value - totalGastosFijos.value - totalDeudas.value;
+  resultado.value = true;
+};
 
 onBeforeMount(async () => {
   console.info("Componente a punto de montarse");
